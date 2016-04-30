@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Name=TV Guide
+Icon=harbour-tv-guide
+Exec=harbour-tv-guide
