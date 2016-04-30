@@ -1,1 +1,1 @@
-Sailfish tv guide application for finnish channels.
+Sailfish tv-guide application for finnish channels.
