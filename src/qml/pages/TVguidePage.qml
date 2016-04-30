@@ -4,13 +4,10 @@ import Sailfish.Silica 1.0
 Page {
     id: tvguidepage
 
-    property string version: ""
-    property string buildNum: ""
-
     SlideshowView {
         id: channelView
         width: tvguidepage.width
-        height: tvguidepage.height
+        height: tvguidepage.height - container.height
         itemWidth: width
 
         model: VisualItemModel {
@@ -45,6 +42,26 @@ Page {
         ava.initialize("ava");
         hero.initialize("hero");
     }
+
+    Rectangle {
+        id: container
+        width: tvguidepage.width
+        height: 5 * Theme.paddingLarge
+        anchors {
+            top: channelView.bottom
+        }
+        border.width: 2
+        color: Theme.secondaryHilightColor
+
+        Label {
+            text: channels.children.objectName
+            anchors {
+                centerIn: parent
+            }
+        }
+    }
+
+
 
     Component.onCompleted: {
         initialize()
