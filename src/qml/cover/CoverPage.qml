@@ -7,9 +7,8 @@ CoverBackground {
 
     Label {
         id: placeholder
-        text: qsTr("No programs today")
+        text: qsTr("TV GUIDE")
         font.pixelSize: Theme.fontSizeTiny
         anchors.centerIn: cover
-        visible: listView.count === 0
     }
 }

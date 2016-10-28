@@ -3,7 +3,7 @@ function load(channel) {
     listModel.clear();
     var xhr = new XMLHttpRequest();
 
-    var url = "http://tvapi-mashupjonne.rhcloud.com/api/channel/" + channel
+    var url = "http://tvapi-mashupjonne.rhcloud.com/api/programs/" + channel
     xhr.open("GET", url, true);
 
     xhr.onreadystatechange = function() {
@@ -28,8 +28,8 @@ function loaded(programs) {
         var currentProgram = false;
 
         var name = programs[index].data.name;
-        var start = new Date(Date.parse(programs[index].data.start)).toLocaleString(Qt.locale(), "hh:mm");
-        var end = new Date(Date.parse(programs[index].data.end)).toLocaleString(Qt.locale(), "hh:mm");
+        var start = new Date(programs[index].data.start).toLocaleString(Qt.locale(), "hh:mm");
+        var end = new Date(programs[index].data.end).toLocaleString(Qt.locale(), "hh:mm");
         var description = programs[index].data.description;
 
         var start_date = new Date();

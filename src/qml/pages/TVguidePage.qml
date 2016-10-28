@@ -43,23 +43,30 @@ Page {
         hero.initialize("hero");
     }
 
-    Rectangle {
-        id: container
-        width: tvguidepage.width
-        height: 5 * Theme.paddingLarge
-        anchors {
-            top: channelView.bottom
-        }
-        border.width: 2
-        color: Theme.secondaryHilightColor
+//    Rectangle {
+//        id: container
+//        width: tvguidepage.width
+//        height: 5 * Theme.paddingLarge
+//        anchors {
+//            top: channelView.bottom
+//        }
+//        border.width: 5
+//        opacity: 0.2
 
-        Label {
-            text: channels.children.objectName
-            anchors {
-                centerIn: parent
-            }
-        }
-    }
+//        Label {
+//            text: "yle1"
+//            anchors {
+//                centerIn: container
+//            }
+//            color: Theme.primaryColor
+//        }
+
+//        Component.onCompleted: {
+//            console.log(channelView.itemAt(0,0).data)
+//            console.log(channelView.itemAt(1,0).data)
+//            console.log(channelView.itemAt(2,0).data)
+//        }
+//    }
 
 
 
