@@ -7,7 +7,7 @@ Page {
     SlideshowView {
         id: channelView
         width: tvguidepage.width
-        height: tvguidepage.height - container.height
+        height: tvguidepage.height
         itemWidth: width
 
         model: VisualItemModel {

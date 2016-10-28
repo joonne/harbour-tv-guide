@@ -1,5 +1,4 @@
 function load(channel) {
-
     listModel.clear();
     var xhr = new XMLHttpRequest();
 
@@ -19,18 +18,16 @@ function load(channel) {
 }
 
 function loaded(programs) {
-
     var date_now = new Date();
     var currentIndex = 0;
 
-    for( var index in programs ) {
-
+    programs.forEach(function(program, index) {
         var currentProgram = false;
 
-        var name = programs[index].data.name;
-        var start = new Date(programs[index].data.start).toLocaleString(Qt.locale(), "hh:mm");
-        var end = new Date(programs[index].data.end).toLocaleString(Qt.locale(), "hh:mm");
-        var description = programs[index].data.description;
+        var name = program.data.name;
+        var start = new Date(program.data.start).toLocaleString(Qt.locale(), "hh:mm");
+        var end = new Date(program.data.end).toLocaleString(Qt.locale(), "hh:mm");
+        var description = program.data.description;
 
         var start_date = new Date();
         var start_time = start.split(":");
@@ -54,7 +51,8 @@ function loaded(programs) {
         // FIX
         // end hour > current hour
         if(date_now.getHours() >= start_date.getHours() && date_now.getHours() < end_date.getHours()) {
-            if((date_now.getHours() * 3600 + date_now.getMinutes() * 60) >= (start_date.getHours() * 3600 + start_date.getMinutes() * 60) && (date_now.getHours() * 3600 + date_now.getMinutes() * 60) < (end_date.getHours() * 3600 + end_date.getMinutes() * 60)) {
+            if((date_now.getHours() * 3600 + date_now.getMinutes() * 60) >= (start_date.getHours() * 3600 + start_date.getMinutes() * 60) &&
+                    (date_now.getHours() * 3600 + date_now.getMinutes() * 60) < (end_date.getHours() * 3600 + end_date.getMinutes() * 60)) {
                 currentIndex = index;
                 currentProgram = true;
                 console.log(name);
@@ -68,8 +66,8 @@ function loaded(programs) {
                              "description": description,
                              "currentProgram": currentProgram
                          });
-    }
+    });
 
-    listview.positionViewAtIndex(currentIndex,listview.Beginning);
+    listview.positionViewAtIndex(currentIndex, listview.Beginning);
     listview.currentIndex = currentIndex;
 }
