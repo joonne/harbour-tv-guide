@@ -20,7 +20,6 @@ OTHER_FILES = \
 #    ../rpm/harbour-tv-guide.yaml \
     ../rpm/harbour-tv-guide.spec \
     qml/main.qml \
-    qml/pages/parser.js \
     qml/pages/Channel.qml \
     qml/pages/ProgramOverviewPage.qml \
     qml/pages/TVguidePage.qml \
@@ -30,4 +29,5 @@ INCLUDEPATH += $$PWD
 
 DISTFILES += \
     qml/components/MoreIndicator.qml \
-    qml/components/TextExpander.qml
+    qml/components/TextExpander.qml \
+    qml/pages/tv-api.js
