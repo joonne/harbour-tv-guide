@@ -4,6 +4,7 @@ import "pages"
 import "cover"
 
 ApplicationWindow {
+    id: appWindow
 
     readonly property string _APP_VERSION: appVersion
     readonly property string _APP_BUILD_NUMBER: appBuildNum

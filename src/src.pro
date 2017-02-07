@@ -30,4 +30,5 @@ INCLUDEPATH += $$PWD
 DISTFILES += \
     qml/components/MoreIndicator.qml \
     qml/components/TextExpander.qml \
-    qml/pages/tv-api.js
+    qml/pages/tv-api.js \
+    qml/pages/componentCreation.js

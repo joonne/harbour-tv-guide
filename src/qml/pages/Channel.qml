@@ -14,6 +14,8 @@ Item {
         TVAPI.getPrograms(channel);
     }
 
+    Component.onCompleted: initialize("yle1")
+
     ListModel {  id:listModel }
 
     SilicaFlickable {
