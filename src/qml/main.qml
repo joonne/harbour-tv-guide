@@ -9,7 +9,7 @@ ApplicationWindow {
     readonly property string _APP_VERSION: appVersion
     readonly property string _APP_BUILD_NUMBER: appBuildNum
 
-    initialPage: TVguidePage { }
+    initialPage: TvGuidePage { }
     cover: CoverPage { }
 }
 

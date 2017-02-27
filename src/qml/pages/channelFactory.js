@@ -1,12 +1,13 @@
-
 var component;
 var channel;
 
-function createSpriteObjects() {
+function createChannel(channelName) {
     component = Qt.createComponent(Qt.resolvedUrl("Channel.qml"));
-    channel = component.createObject(channelView);
+    channel = component.createObject(appWindow, { "channelName": channelName });
 
     if (channel === null) {
         console.log("Error creating object");
     }
+
+    return channel;
 }

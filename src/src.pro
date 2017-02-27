@@ -22,7 +22,6 @@ OTHER_FILES = \
     qml/main.qml \
     qml/pages/Channel.qml \
     qml/pages/ProgramOverviewPage.qml \
-    qml/pages/TVguidePage.qml \
     qml/cover/CoverPage.qml
 
 INCLUDEPATH += $$PWD
@@ -30,5 +29,6 @@ INCLUDEPATH += $$PWD
 DISTFILES += \
     qml/components/MoreIndicator.qml \
     qml/components/TextExpander.qml \
-    qml/pages/tv-api.js \
-    qml/pages/componentCreation.js
+    qml/pages/channelFactory.js \
+    qml/pages/tvApi.js \
+    qml/pages/TvGuidePage.qml

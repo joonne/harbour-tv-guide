@@ -16,7 +16,7 @@ function getPrograms(channel) {
     xhr.send();
 }
 
-function getChannels() {
+function getChannels(populate) {
     var xhr = new XMLHttpRequest();
 
     var url = "http://tvapi-mashupjonne.rhcloud.com/api/channels";
@@ -27,6 +27,7 @@ function getChannels() {
             if (xhr.status === 200) {
                 var channels = JSON.parse(xhr.responseText);
                 console.log("channels", channels);
+                populate(channels.slice(0, 4));
             }
         }
     }
