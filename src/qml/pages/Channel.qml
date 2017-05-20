@@ -1,20 +1,21 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import "tv-api.js" as TVAPI
+import "tvApi.js" as TvApi
 
 Item {
-    property string channelName: "";
+    property string channelName: ""
 
-    height: channelView.height;
-    width: channelView.width;
+    height: channelView.height
+    width: channelView.width
 
-    function initialize(channel) {
-        channelName = channel;
-        TVAPI.getPrograms(channel);
+    function initialize() {
+        TvApi.getPrograms(channelName)
     }
 
-    ListModel {  id:listModel }
+    Component.onCompleted: initialize()
+
+    ListModel {  id: listModel }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -68,7 +69,7 @@ Item {
 
             ViewPlaceholder {
                 enabled: listview.count === 0
-                text: qsTr("Ei ohjelmia.");
+                text: qsTr("Ei ohjelmia.")
             }
         }
     }
