@@ -48,7 +48,7 @@ Item {
                     width: parent.width - Theme.paddingLarge
 
                     Label {
-                        color: currentProgram ? Theme.highlightColor : Theme.primaryColor;
+                        color: currentProgram ? Theme.highlightColor : Theme.primaryColor
                         text: name
                         width: parent.width
                         truncationMode: TruncationMode.Fade

@@ -2,8 +2,8 @@ function getPrograms(channel) {
     listModel.clear();
     var xhr = new XMLHttpRequest();
 
-    var url = "http://tvapi-mashupjonne.rhcloud.com/api/programs/" + channel;
-    xhr.open("GET", url, true);
+    var url = 'http://tvapi-mashupjonne.rhcloud.com/api/programs/' + channel;
+    xhr.open('GET', url, true);
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === xhr.DONE) {
@@ -24,8 +24,8 @@ function getPrograms(channel) {
 function getChannels(populate) {
     var xhr = new XMLHttpRequest();
 
-    var url = "http://tvapi-mashupjonne.rhcloud.com/api/channels";
-    xhr.open("GET", url, true);
+    var url = 'http://tvapi-mashupjonne.rhcloud.com/api/channels';
+    xhr.open('GET', url, true);
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === xhr.DONE) {
@@ -56,11 +56,11 @@ function populateModel(programs) {
         }
 
         listModel.append({
-                             "name": program.data.name,
-                             "start": new Date(program.data.start).toLocaleString(Qt.locale(), "hh:mm"),
-                             "end": new Date(program.data.end).toLocaleString(Qt.locale(), "hh:mm"),
-                             "description": program.data.description,
-                             "currentProgram": currentProgram
+                             name: program.data.name,
+                             start: new Date(program.data.start).toLocaleString(Qt.locale(), 'hh:mm'),
+                             end: new Date(program.data.end).toLocaleString(Qt.locale(), 'hh:mm'),
+                             description: program.data.description,
+                             currentProgram: currentProgram
                          });
     });
 
