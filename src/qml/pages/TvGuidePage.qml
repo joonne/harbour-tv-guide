@@ -2,6 +2,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQml.Models 2.2
 
+import "../components"
+
 import "tvApi.js" as TvApi
 import "channelFactory.js" as ChannelFactory
 
@@ -9,6 +11,7 @@ Page {
     id: tvguidepage
 
     function populate(channels) {
+        channelModel.clear()
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
@@ -28,7 +31,7 @@ Page {
             }
         }
 
-        SlideshowView {
+        SlideshowViewNew {
             id: channelView
             width: parent.width
             height: parent.height

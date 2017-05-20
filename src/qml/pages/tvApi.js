@@ -14,7 +14,7 @@ function getPrograms(channel) {
                 } catch(e) {
                     programs = [];
                 }
-                populateModel(programs);
+                populateProgramModel(programs);
             }
         }
     }
@@ -36,14 +36,15 @@ function getChannels(populate) {
                 } catch(e) {
                     channels = [];
                 }
-                populate(channels.slice(0, 4));
+                populate(channels);
+//                populate(channels.slice(0, 4));
             }
         }
     }
     xhr.send();
 }
 
-function populateModel(programs) {
+function populateProgramModel(programs) {
     var dateNow = new Date();
     var currentIndex = 0;
 
@@ -60,7 +61,7 @@ function populateModel(programs) {
                              start: new Date(program.data.start).toLocaleString(Qt.locale(), 'hh:mm'),
                              end: new Date(program.data.end).toLocaleString(Qt.locale(), 'hh:mm'),
                              description: program.data.description,
-                             currentProgram: currentProgram
+                             currentProgram: currentProgram,
                          });
     });
 

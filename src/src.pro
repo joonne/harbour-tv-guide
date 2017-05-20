@@ -31,4 +31,5 @@ DISTFILES += \
     qml/components/TextExpander.qml \
     qml/pages/channelFactory.js \
     qml/pages/tvApi.js \
-    qml/pages/TvGuidePage.qml
+    qml/pages/TvGuidePage.qml \
+    qml/components/SlideshowViewNew.qml

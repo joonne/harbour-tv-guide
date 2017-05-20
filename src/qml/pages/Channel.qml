@@ -34,14 +34,12 @@ Item {
             clip: true
             delegate: ListItem {
                 width: parent.width
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("ProgramOverviewPage.qml"), {
-                                       programName: name,
-                                       programOverview: description,
-                                       start: start,
-                                       end: end
-                                   })
-                }
+                onClicked: pageStack.push(Qt.resolvedUrl("ProgramOverviewPage.qml"), {
+                                              programName: name,
+                                              programOverview: description,
+                                              start: start,
+                                              end: end
+                                          })
 
                 Column {
                     x: Theme.paddingLarge
