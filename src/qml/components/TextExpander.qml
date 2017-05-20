@@ -17,7 +17,7 @@ Column {
         }
 
         property int actualSize: innerColumn.height
-        property int collapsedSize: 160
+        property int collapsedSize: (Theme.paddingLarge * 10)
         property bool expanded: false
 
         Column {
@@ -28,29 +28,25 @@ Column {
                 id: contentLabel
                 label: qsTr("Kuvaus")
                 width: parent.width
-                text: textContent
+                text:  textContent
                 readOnly: true
                 color: Theme.secondaryColor
+                onClicked: textContainer.expanded = !textContainer.expanded
             }
         }
-    }
 
-    BackgroundItem {
-        // anchors.fill: parent
-        onClicked: textContainer.expanded = !textContainer.expanded
+        OpacityRampEffect {
+                sourceItem: innerColumn
+                enabled: !textContainer.expanded
+                direction: OpacityRamp.TopToBottom
+            }
     }
 
     Item {
         id: expanderToggle
-        height: 20
+        height: Theme.paddingLarge
         width: parent.width
-        visible: textContainer.actualSize > textContainer.collapsedSize
-        opacity: 50
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: textContainer.expanded = !textContainer.expanded
-        }
+        visible: textContainer.actualSize > textContainer.collapsedSize && textContainer.expanded === false
 
         MoreIndicator {
             id: moreIndicator
@@ -59,4 +55,3 @@ Column {
         }
     }
 }
-

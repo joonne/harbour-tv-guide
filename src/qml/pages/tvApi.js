@@ -8,7 +8,12 @@ function getPrograms(channel) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
-                var programs = JSON.parse(xhr.responseText);
+                var programs;
+                try {
+                    programs = JSON.parse(xhr.responseText);
+                } catch(e) {
+                    programs = [];
+                }
                 populateModel(programs);
             }
         }
@@ -25,8 +30,12 @@ function getChannels(populate) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
-                var channels = JSON.parse(xhr.responseText);
-                console.log("channels", channels);
+                var channels;
+                try {
+                    channels = JSON.parse(xhr.responseText);
+                } catch(e) {
+                    channels = [];
+                }
                 populate(channels.slice(0, 4));
             }
         }
@@ -41,46 +50,16 @@ function populateModel(programs) {
     programs.forEach(function(program, index) {
         var currentProgram = false;
 
-        var name = program.data.name;
-        var start = new Date(program.data.start).toLocaleString(Qt.locale(), "hh:mm");
-        var end = new Date(program.data.end).toLocaleString(Qt.locale(), "hh:mm");
-        var description = program.data.description;
-
-        var startDate = new Date();
-        var startTime = start.split(":");
-        startDate.setHours(startTime[0]);
-        startDate.setMinutes(startTime[1]);
-
-        var endDate = new Date();
-        var endTime = end.split(":");
-        endDate.setHours(endTime[0]);
-        endDate.setMinutes(endTime[1]);
-
-        // same end hour
-        if(dateNow.getHours() >= startDate.getHours() && dateNow.getHours() === endDate.getHours()) {
-            if(dateNow.getMinutes() >= startDate.getMinutes() && dateNow.getMinutes() < endDate.getMinutes()) {
-                currentIndex = index;
-                currentProgram = true;
-                console.log("same end hour: ", program.channelName, name);
-            }
-        }
-
-        // FIX
-        // end hour > current hour
-        if(dateNow.getHours() >= startDate.getHours() && dateNow.getHours() < endDate.getHours()) {
-            if((dateNow.getHours() * 3600 + dateNow.getMinutes() * 60) >= (startDate.getHours() * 3600 + startDate.getMinutes() * 60) &&
-                    (dateNow.getHours() * 3600 + dateNow.getMinutes() * 60) < (endDate.getHours() * 3600 + endDate.getMinutes() * 60)) {
-                currentIndex = index;
-                currentProgram = true;
-                console.log("end hour > current hour: ", program.channelName, name);
-            }
+        if (dateNow >= new Date(program.data.start) && dateNow <= new Date(program.data.end)) {
+            currentIndex = index;
+            currentProgram = true;
         }
 
         listModel.append({
-                             "name": name,
-                             "start": start,
-                             "end": end,
-                             "description": description,
+                             "name": program.data.name,
+                             "start": new Date(program.data.start).toLocaleString(Qt.locale(), "hh:mm"),
+                             "end": new Date(program.data.end).toLocaleString(Qt.locale(), "hh:mm"),
+                             "description": program.data.description,
                              "currentProgram": currentProgram
                          });
     });
