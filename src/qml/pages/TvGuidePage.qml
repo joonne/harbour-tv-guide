@@ -24,13 +24,6 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Päivitä kaikki kanavat")
-                onClicked: initialize()
-            }
-        }
-
         SlideshowViewNew {
             id: channelView
             width: parent.width

@@ -36,10 +36,10 @@ Column {
         }
 
         OpacityRampEffect {
-                sourceItem: innerColumn
-                enabled: !textContainer.expanded
-                direction: OpacityRamp.TopToBottom
-            }
+            sourceItem: innerColumn
+            enabled: !textContainer.expanded
+            direction: OpacityRamp.TopToBottom
+        }
     }
 
     Item {
