@@ -6,7 +6,7 @@ CoverBackground {
 
     Label {
         id: placeholder
-        text: qsTr("TV GUIDE")
+        text: appWindow.channelName
         font.pixelSize: Theme.fontSizeTiny
         anchors.centerIn: cover
     }

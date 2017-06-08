@@ -37,7 +37,6 @@ function getChannels(populate) {
                     channels = [];
                 }
                 populate(channels);
-//                populate(channels.slice(0, 4));
             }
         }
     }

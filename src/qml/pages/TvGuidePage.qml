@@ -26,9 +26,12 @@ Page {
 
         SlideshowViewNew {
             id: channelView
-            width: parent.width
-            height: parent.height
+            anchors.fill: parent
             itemWidth: width
+
+            onFlickEnded: {
+                appWindow.channelName = channelView.currentItem.channelName
+            }
 
             model: ObjectModel {
                 id: channelModel

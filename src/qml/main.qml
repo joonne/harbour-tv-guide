@@ -9,6 +9,8 @@ ApplicationWindow {
     readonly property string _APP_VERSION: appVersion
     readonly property string _APP_BUILD_NUMBER: appBuildNum
 
+    property string channelName: "TV-GUIDE"
+
     initialPage: TvGuidePage { }
     cover: CoverPage { }
 }
