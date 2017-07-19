@@ -10,7 +10,7 @@ import "../js/channelFactory.js" as ChannelFactory
 Page {
     id: tvguidepage
 
-    function populate(channels) {
+    function populateChannelModel(channels) {
         channelModel.clear()
         console.log(channels)
         channels.forEach(function(channel) {
@@ -18,19 +18,15 @@ Page {
         })
     }
 
-    function initialize() {
-        TvApi.getChannels()
-            .then(populate)
-            .catch(populate)
-    }
-
     SilicaFlickable {
         anchors.fill: parent
 
-        SlideshowViewNew {
+        SlideshowView {
             id: channelView
             anchors.fill: parent
             itemWidth: width
+            /* allows to create channels dynamically */
+            cacheItemCount: 100
 
             onFlickEnded: {
                 appWindow.channelName = channelView.currentItem.channelName
@@ -41,6 +37,10 @@ Page {
             }
         }
 
-        Component.onCompleted: initialize()
+        Component.onCompleted: {
+            TvApi.getChannels()
+                .then(populateChannelModel)
+                .catch(populateChannelModel)
+        }
     }
 }
