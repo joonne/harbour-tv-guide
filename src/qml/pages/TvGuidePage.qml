@@ -4,21 +4,24 @@ import QtQml.Models 2.2
 
 import "../components"
 
-import "tvApi.js" as TvApi
-import "channelFactory.js" as ChannelFactory
+import "../js/tvApi.js" as TvApi
+import "../js/channelFactory.js" as ChannelFactory
 
 Page {
     id: tvguidepage
 
     function populate(channels) {
         channelModel.clear()
+        console.log(channels)
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
     }
 
     function initialize() {
-        TvApi.getChannels(populate)
+        TvApi.getChannels()
+            .then(populate)
+            .catch(populate)
     }
 
     SilicaFlickable {

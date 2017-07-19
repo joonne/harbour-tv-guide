@@ -29,7 +29,10 @@ INCLUDEPATH += $$PWD
 DISTFILES += \
     qml/components/MoreIndicator.qml \
     qml/components/TextExpander.qml \
-    qml/pages/channelFactory.js \
-    qml/pages/tvApi.js \
     qml/pages/TvGuidePage.qml \
-    qml/components/SlideshowViewNew.qml
+    qml/components/SlideshowViewNew.qml \
+    qml/js/http.js \
+    qml/js/promise.js \
+    qml/js/timeout.js \
+    qml/js/channelFactory.js \
+    qml/js/tvApi.js
