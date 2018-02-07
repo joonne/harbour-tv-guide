@@ -14,14 +14,14 @@ Item {
         var currentIndex = 0;
 
         programs.forEach(function(program, index) {
-            if (dateNow >= new Date(program.data.start) && dateNow <= new Date(program.data.end)) {
+            if (dateNow >= new Date(program.data.start * 1000) && dateNow <= new Date(program.data.end * 1000)) {
                 currentIndex = index;
             }
 
             listModel.append({
                                  name: program.data.name,
-                                 start: new Date(program.data.start).toLocaleString(Qt.locale(), 'hh:mm'),
-                                 end: new Date(program.data.end).toLocaleString(Qt.locale(), 'hh:mm'),
+                                 start: new Date(program.data.start * 1000).toLocaleString(Qt.locale(), 'hh:mm'),
+                                 end: new Date(program.data.end * 1000).toLocaleString(Qt.locale(), 'hh:mm'),
                                  description: program.data.description,
                                  currentProgram: false,
                              });

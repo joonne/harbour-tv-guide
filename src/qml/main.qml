@@ -14,27 +14,37 @@ ApplicationWindow {
 
     // TODO: load state from LocalStorage / DB on start
     property var state: ({
-                             channel: { name: "TV-GUIDE" },
-                             country: { abbreviation: "fi" },
+                             channel: {
+                                 _id: "jim.nelonen.fi",
+                                 name: "JIM",
+                                 icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
+                                 country: "fi"
+                             },
+                             country: {
+                                 _id: "5a78c818ba6fa20011a907f0",
+                                 name: "Finland",
+                                 abbreviation: "fi"
+                             },
                              channels: [{
-                                     _id: "jim.nelonen.fi",
-                                     name: "JIM",
-                                     icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
-                                     country: "fi"
-                                 }]
+                                 _id: "jim.nelonen.fi",
+                                 name: "JIM",
+                                 icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
+                                 country: "fi"
+                             }]
                          })
 
     function changeCountry(country) {
-        state = Object.assign({}, state, { country: country });
+        state = Object.assign({}, state, { country: country })
     }
 
     function changeChannel(channel) {
-        state = Object.assign({}, state, { channel: channel });
+        state = Object.assign({}, state, { channel: channel })
     }
 
     function changeChannels(channels) {
-        state = Object.assign({}, state, { channels: channels });
-        guide.populateChannelModel(state.channels)
+        state = Object.assign({}, state, { channels: channels })
+        // TODO: clear model correctly
+        // guide.populateChannelModel(state.channels)
     }
 
     initialPage: TvGuidePage { id: guide }
