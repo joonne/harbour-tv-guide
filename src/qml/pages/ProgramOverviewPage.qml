@@ -6,11 +6,8 @@ import "../components"
 Page {
     id: programoverviewpage
 
-    // parameters for the page,
-    // pushed from previous page with the pageStack
     property string programName
     property string programOverview
-    property string guestStars
     property string start
     property string end
 

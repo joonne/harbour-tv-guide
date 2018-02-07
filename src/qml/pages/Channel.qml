@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 import "../js/tvApi.js" as TvApi
 
 Item {
-    property string channelName: ""
+    property var channel: ({})
 
     height: channelView.height
     width: channelView.width
@@ -36,7 +36,7 @@ Item {
     }
 
     function initialize() {
-        TvApi.getPrograms(channelName)
+        TvApi.getPrograms(channel._id)
             .then(populateProgramModel)
             .catch(populateProgramModel)
     }
@@ -50,14 +50,7 @@ Item {
 
         PageHeader {
             id: pageheader
-            title: channelName
-        }
-
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Päivitä")
-                onClicked: initialize()
-            }
+            title: channel.name
         }
 
         SilicaListView {

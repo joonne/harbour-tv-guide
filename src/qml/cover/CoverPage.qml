@@ -6,7 +6,7 @@ CoverBackground {
 
     Label {
         id: placeholder
-        text: appWindow.channelName
+        text: appWindow.state.channel.name
         font.pixelSize: Theme.fontSizeTiny
         anchors.centerIn: cover
     }

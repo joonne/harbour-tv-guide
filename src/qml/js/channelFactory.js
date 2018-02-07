@@ -1,10 +1,10 @@
-function createChannel(channelName) {
+function createChannel(channel) {
     var component = Qt.createComponent(Qt.resolvedUrl("../pages/Channel.qml"));
-    var channel = component.createObject(appWindow, { "channelName": channelName });
+    var channelObject = component.createObject(appWindow, { "channel": channel });
 
-    if (channel === null) {
+    if (channelObject === null) {
         console.log("Error creating object");
     }
 
-    return channel;
+    return channelObject;
 }

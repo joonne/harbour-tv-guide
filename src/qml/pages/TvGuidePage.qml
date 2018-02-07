@@ -12,7 +12,6 @@ Page {
 
     function populateChannelModel(channels) {
         channelModel.clear()
-        console.log(channels)
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
@@ -21,15 +20,31 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"), {
+                                              appWindow: appWindow
+                                          })
+            }
+
+            MenuItem {
+                text: qsTr("Update")
+                onClicked: channelView.currentItem.initialize()
+            }
+        }
+
         SlideshowView {
             id: channelView
             anchors.fill: parent
             itemWidth: width
             /* allows to create channels dynamically */
-            cacheItemCount: 100
+            cacheItemCount: 1000
+            /* prevent pageStack from showing next/previous items upon flick */
+            clip: true
 
             onFlickEnded: {
-                appWindow.channelName = channelView.currentItem.channelName
+                appWindow.changeChannel(channelView.currentItem.channel)
             }
 
             model: ObjectModel {
@@ -38,9 +53,10 @@ Page {
         }
 
         Component.onCompleted: {
-            TvApi.getChannels()
-                .then(populateChannelModel)
-                .catch(populateChannelModel)
+//            TvApi.getChannels(appWindow.state.country.abbreviation)
+//                .then(populateChannelModel)
+//                .catch(populateChannelModel)
+            populateChannelModel(appWindow.state.channels)
         }
     }
 }
