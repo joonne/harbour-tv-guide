@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 import "pages"
 import "cover"
 
+import "./js/storage.js" as Storage
+
 // Object.assign
 import "./js/polyfills.js" as Polyfills
 
@@ -12,26 +14,7 @@ ApplicationWindow {
     readonly property string _APP_VERSION: appVersion
     readonly property string _APP_BUILD_NUMBER: appBuildNum
 
-    // TODO: load state from LocalStorage / DB on start
-    property var state: ({
-                             channel: {
-                                 _id: "jim.nelonen.fi",
-                                 name: "JIM",
-                                 icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
-                                 country: "fi"
-                             },
-                             country: {
-                                 _id: "5a78c818ba6fa20011a907f0",
-                                 name: "Finland",
-                                 abbreviation: "fi"
-                             },
-                             channels: [{
-                                 _id: "jim.nelonen.fi",
-                                 name: "JIM",
-                                 icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
-                                 country: "fi"
-                             }]
-                         })
+    property var state: Storage.readState()
 
     function changeCountry(country) {
         state = Object.assign({}, state, { country: country })

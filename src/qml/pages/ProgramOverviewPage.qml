@@ -11,7 +11,6 @@ Page {
     property string start
     property string end
 
-
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
@@ -37,7 +36,7 @@ Page {
                 text: start + " - " + end
                 readOnly: true
                 color: Theme.secondaryColor
-                label: qsTr("Aika")
+                label: qsTr("Time")
                 font.pixelSize: Theme.fontSizeSmall
                 width: programoverviewpage.width
 
