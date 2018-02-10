@@ -93,11 +93,13 @@ Item {
 
             VerticalScrollDecorator {
                 id: decorator
+                flickable: listview
             }
 
             ViewPlaceholder {
                 enabled: listview.count === 0
-                text: qsTr("Ei ohjelmia.")
+                text: qsTr("No programs")
+                hintText: qsTr("Pull down to select country and channels")
             }
         }
     }

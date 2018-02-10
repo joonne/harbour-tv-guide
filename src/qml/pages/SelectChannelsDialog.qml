@@ -58,9 +58,17 @@ Dialog {
                         })
                     }
 
-                    console.log(selectedChannels)
+                    console.log('selected: ', selectedChannels.length, 'channels')
                 }
             }
+        }
+
+        VerticalScrollDecorator { flickable: listView }
+
+        ViewPlaceholder {
+             enabled: listView.count === 0
+             text: qsTr("No channels")
+             hintText: qsTr("Pull down to try to fetch channels again")
         }
     }
 }

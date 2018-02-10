@@ -44,5 +44,13 @@ Dialog {
                 }
             }
         }
+
+        VerticalScrollDecorator { flickable: listView }
+
+        ViewPlaceholder {
+             enabled: listView.count === 0
+             text: qsTr("No countries")
+             hintText: qsTr("Pull down to try to fetch countries again")
+        }
     }
 }

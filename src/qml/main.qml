@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import "pages"
 import "cover"
 
-import "./js/storage.js" as Storage
+import "./js/storage.js" as DB
 
 // Object.assign
 import "./js/polyfills.js" as Polyfills
@@ -15,12 +15,20 @@ ApplicationWindow {
     readonly property string _APP_BUILD_NUMBER: appBuildNum
 
     Component.onCompleted: {
-        Storage.dbInit()
-        state = Storage.readState()
-        guide.populateChannelModel(state.channels)
+        DB.init()
+        state = DB.readState()
     }
 
     property var state: ({})
+
+    onStateChanged: {
+        if (!Object.keys(state).length) {
+            return
+        }
+
+        DB.writeState(state)
+        guide.populateChannelModel(state.channels)
+    }
 
     function qObjectToObject(qObject) {
         return {
@@ -33,23 +41,16 @@ ApplicationWindow {
 
     function changeCountry(country) {
         state = Object.assign({}, state, { country: country })
-        Storage.writeState(state)
     }
 
     function changeChannel(channel) {
         state = Object.assign({}, state, { channel: channel })
-        Storage.writeState(state)
     }
 
     function changeChannels(channels) {
         state = Object.assign({}, state, { channels: channels })
-        Storage.writeState(state)
-        // TODO: clear model correctly
-         guide.populateChannelModel(state.channels)
     }
 
     initialPage: TvGuidePage { id: guide }
     cover: CoverPage { }
 }
-
-

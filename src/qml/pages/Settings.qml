@@ -6,11 +6,6 @@ import "../js/tvApi.js" as TvApi
 Page {
     property var appWindow
 
-    onAppWindowChanged: {
-        console.log('appWindow changed')
-        console.log(JSON.stringify(appWindow.state))
-    }
-
     Column {
         anchors.fill: parent
         spacing: Theme.paddingLarge
@@ -60,6 +55,7 @@ Page {
                 var dialog = pageStack.push(Qt.resolvedUrl("SelectChannelsDialog.qml"), { country: appWindow.state.country, selectedChannels: appWindow.state.channels })
                 dialog.accepted.connect(function() {
                     appWindow.changeChannels(dialog.selectedChannels.slice(0))
+                    appWindow.changeChannel(dialog.selectedChannels.slice(0)[0])
                 })
             }
         }

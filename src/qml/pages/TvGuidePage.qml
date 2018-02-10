@@ -11,10 +11,6 @@ Page {
     id: tvguidepage
 
     function populateChannelModel(channels) {
-        channelModel.clear()
-        channelView.model = []
-        channelView.model = channelModel
-        channelView.update()
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
@@ -53,13 +49,6 @@ Page {
             model: ObjectModel {
                 id: channelModel
             }
-        }
-
-        Component.onCompleted: {
-//            TvApi.getChannels(appWindow.state.country.abbreviation)
-//                .then(populateChannelModel)
-//                .catch(populateChannelModel)
-//            populateChannelModel(appWindow.state.channels)
         }
     }
 }

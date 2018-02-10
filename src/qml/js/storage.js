@@ -1,77 +1,50 @@
 .pragma library
 .import QtQuick.LocalStorage 2.0 as Storage
 
-var initialState = {
-    channel: {
-        _id: "jim.nelonen.fi",
-        name: "JIM",
-        icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
-        country: "fi"
-    },
-    country: {
-        _id: "5a78c818ba6fa20011a907f0",
-        name: "Finland",
-        abbreviation: "fi"
-    },
-    channels: [{
-        _id: "jim.nelonen.fi",
-        name: "JIM",
-        icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
-        country: "fi"
-    }]
-}
-
-function dbGetHandle()
-{
+function getHandle() {
     try {
-        var db = Storage.LocalStorage.openDatabaseSync("harbour-tv-guide", "1.0", "state", 100000)
+        var db = Storage.LocalStorage.openDatabaseSync("harbour-tv-guide", "1.0", "state", 100000);
     } catch (err) {
-        console.log("Error opening database: " + err)
+        console.log("Error opening database: " + err);
     }
 
-    return db
+    return db;
 }
 
-function dbInit()
-{
-    var db = dbGetHandle();
+function init() {
+    var db = getHandle();
     try {
         db.transaction(function (tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS state (id integer PRIMARY KEY, state text)')
         });
     } catch (err) {
-        console.log("Error creating table in database: " + err)
-    };
+        console.log("Error creating table in database: " + err);
+    }
 }
 
-function writeState(state)
-{
-    var db = dbGetHandle()
-    var rowid = 0;
-    db.transaction(function (tx) {
-        tx.executeSql('INSERT OR REPLACE INTO state VALUES(?,?)', [1, JSON.stringify(state)])
-        var result = tx.executeSql('SELECT last_insert_rowid()')
-        rowid = result.insertId
-    })
-
-    return rowid;
+function writeState(state) {
+    var db = getHandle();
+    try {
+        db.transaction(function (tx) {
+            tx.executeSql('INSERT OR REPLACE INTO state VALUES(?,?)', [1, JSON.stringify(state)]);
+        })
+    } catch (error) {
+        console.log("Error inserting state in database: " + err);
+    }
 }
 
-function readState()
-{
+function readState() {
     var state;
-    var db = dbGetHandle()
+    var db = getHandle();
     db.transaction(function (tx) {
-        var results = tx.executeSql('SELECT * FROM state WHERE id = 1;')
+        var results = tx.executeSql('SELECT * FROM state WHERE id = 1;');
         try {
-            state = JSON.parse(results.rows.item(0).state)
+            state = JSON.parse(results.rows.item(0).state);
         } catch (error) {
-            console.log('readState: ', error)
-//            TODO: use this & make UI respond to empty initial state
-//            state = { channel: {}, country: {}, channels: [{}] }
-            state = initialState;
+            console.log('readState: ', error);
+            state = { channel: {}, country: {}, channels: [{}] };
         }
     })
 
-    return state
+    return state;
 }

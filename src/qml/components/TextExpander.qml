@@ -26,7 +26,7 @@ Column {
 
             TextArea {
                 id: contentLabel
-                label: qsTr("Kuvaus")
+                label: qsTr("Description")
                 width: parent.width
                 text:  textContent
                 readOnly: true
