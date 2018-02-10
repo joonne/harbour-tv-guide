@@ -1,5 +1,4 @@
 .import "http.js" as HTTP
-.import "promise.js" as Promise
 
 var apiUrl = 'http://tv-api-tv-api.1d35.starter-us-east-1.openshiftapps.com/api';
 

@@ -12,6 +12,9 @@ Page {
 
     function populateChannelModel(channels) {
         channelModel.clear()
+        channelView.model = []
+        channelView.model = channelModel
+        channelView.update()
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
@@ -38,13 +41,13 @@ Page {
             id: channelView
             anchors.fill: parent
             itemWidth: width
-            /* allows to create channels dynamically */
+            /* allows to create channels dynamically, possibly bad practice */
             cacheItemCount: 1000
             /* prevent pageStack from showing next/previous items upon flick */
             clip: true
 
             onFlickEnded: {
-                appWindow.changeChannel(channelView.currentItem.channel)
+                appWindow.changeChannel(appWindow.qObjectToObject(channelView.currentItem.channel))
             }
 
             model: ObjectModel {
@@ -56,7 +59,7 @@ Page {
 //            TvApi.getChannels(appWindow.state.country.abbreviation)
 //                .then(populateChannelModel)
 //                .catch(populateChannelModel)
-            populateChannelModel(appWindow.state.channels)
+//            populateChannelModel(appWindow.state.channels)
         }
     }
 }

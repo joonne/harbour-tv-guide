@@ -19,28 +19,12 @@ var initialState = {
         icon: "http://chanlogos.xmltv.se/jim.nelonen.fi.png",
         country: "fi"
     }]
-};
-
-function getDatabase() {
-    return Storage.LocalStorage.openDatabaseSync("harbour-tv-guide", "1.0", "state", 100000);
-}
-
-function dbInit()
-{
-    var db = getDatabase();
-    try {
-        db.transaction(function (tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS state (state text)');
-        });
-    } catch (err) {
-        console.log("Error creating table in database: " + err)
-    };
 }
 
 function dbGetHandle()
 {
     try {
-        var db = getDatabase();
+        var db = Storage.LocalStorage.openDatabaseSync("harbour-tv-guide", "1.0", "state", 100000)
     } catch (err) {
         console.log("Error opening database: " + err)
     }
@@ -48,12 +32,24 @@ function dbGetHandle()
     return db
 }
 
+function dbInit()
+{
+    var db = dbGetHandle();
+    try {
+        db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS state (id integer PRIMARY KEY, state text)')
+        });
+    } catch (err) {
+        console.log("Error creating table in database: " + err)
+    };
+}
+
 function writeState(state)
 {
     var db = dbGetHandle()
     var rowid = 0;
     db.transaction(function (tx) {
-        tx.executeSql('INSERT INTO state VALUES(?)', [state])
+        tx.executeSql('INSERT OR REPLACE INTO state VALUES(?,?)', [1, JSON.stringify(state)])
         var result = tx.executeSql('SELECT last_insert_rowid()')
         rowid = result.insertId
     })
@@ -63,9 +59,19 @@ function writeState(state)
 
 function readState()
 {
+    var state;
     var db = dbGetHandle()
     db.transaction(function (tx) {
-        var results = tx.executeSql('SELECT state FROM state')
-        return results.rows.item(0) ? results.rows.item(0).state : initialState
+        var results = tx.executeSql('SELECT * FROM state WHERE id = 1;')
+        try {
+            state = JSON.parse(results.rows.item(0).state)
+        } catch (error) {
+            console.log('readState: ', error)
+//            TODO: use this & make UI respond to empty initial state
+//            state = { channel: {}, country: {}, channels: [{}] }
+            state = initialState;
+        }
     })
+
+    return state
 }

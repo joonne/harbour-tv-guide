@@ -46,7 +46,12 @@ Dialog {
                 anchors.fill: parent
                 onClicked: {
                     if (!isSelected(_id)) {
-                        selectedChannels.push(channels.get(index))
+                        selectedChannels.push({
+                                                  _id: channels.get(index)._id,
+                                                  name: channels.get(index).name,
+                                                  icon: channels.get(index).icon,
+                                                  country: channels.get(index).country
+                                              })
                     } else {
                         selectedChannels = selectedChannels.filter(function(channel) {
                             return channel._id !== _id

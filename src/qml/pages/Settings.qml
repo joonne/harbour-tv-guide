@@ -4,9 +4,12 @@ import Sailfish.Silica 1.0
 import "../js/tvApi.js" as TvApi
 
 Page {
-    property var country: ({ name: "Not set" })
-    property var channels: ([])
     property var appWindow
+
+    onAppWindowChanged: {
+        console.log('appWindow changed')
+        console.log(JSON.stringify(appWindow.state))
+    }
 
     Column {
         anchors.fill: parent
@@ -20,7 +23,7 @@ Page {
 
         DetailItem {
             label: qsTr("Selected")
-            value: country.name
+            value: appWindow.state.country.name
         }
 
         Button {
@@ -31,11 +34,10 @@ Page {
             }
 
             onClicked: {
-                var dialog = pageStack.push(Qt.resolvedUrl("SelectCountryDialog.qml"), { country: country })
+                var dialog = pageStack.push(Qt.resolvedUrl("SelectCountryDialog.qml"), { country: appWindow.state.country })
                 dialog.accepted.connect(function() {
-                    country = Object.assign({}, dialog.country)
-                    appWindow.changeCountry(country)
-                    console.log("country", JSON.stringify(country))
+                    appWindow.changeCountry(Object.assign({}, dialog.country))
+                    appWindow.changeChannels([])
                 })
             }
         }
@@ -44,7 +46,7 @@ Page {
 
         DetailItem {
             label: qsTr("Selected")
-            value: qsTr("%1 channels").arg(channels.length)
+            value: qsTr("%1 channels").arg(appWindow.state.channels.length)
         }
 
         Button {
@@ -55,11 +57,9 @@ Page {
             }
 
             onClicked: {
-                var dialog = pageStack.push(Qt.resolvedUrl("SelectChannelsDialog.qml"), { country: country, selectedChannels: channels })
+                var dialog = pageStack.push(Qt.resolvedUrl("SelectChannelsDialog.qml"), { country: appWindow.state.country, selectedChannels: appWindow.state.channels })
                 dialog.accepted.connect(function() {
-                    channels = dialog.selectedChannels.slice(0)
-                    appWindow.changeChannels(channels)
-                    console.log("channels", JSON.stringify(channels))
+                    appWindow.changeChannels(dialog.selectedChannels.slice(0))
                 })
             }
         }

@@ -40,6 +40,7 @@ Dialog {
                 anchors.fill: parent
                 onClicked: {
                     country = countries.get(index)
+                    accept()
                 }
             }
         }

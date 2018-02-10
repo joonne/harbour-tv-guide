@@ -4,10 +4,27 @@ import Sailfish.Silica 1.0
 CoverBackground {
     id: cover
 
-    Label {
-        id: placeholder
-        text: appWindow.state.channel.name
-        font.pixelSize: Theme.fontSizeTiny
-        anchors.centerIn: cover
+    Column {
+        anchors.centerIn: parent
+        spacing: Theme.paddingLarge
+
+        Image {
+            source: appWindow.state.channel.icon
+            sourceSize.width: parent.width
+            anchors {
+                left: parent.left
+                leftMargin: (parent.width - width) / 2
+            }
+        }
+
+        Label {
+            id: placeholder
+            text: appWindow.state.channel.name
+            font.pixelSize: Theme.fontSizeTiny
+            anchors {
+                left: parent.left
+                leftMargin: (parent.width - width) / 2
+            }
+        }
     }
 }
