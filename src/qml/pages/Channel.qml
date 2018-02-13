@@ -36,6 +36,7 @@ Item {
     }
 
     function initialize() {
+        listModel.clear()
         TvApi.getPrograms(channel._id)
             .then(populateProgramModel)
             .catch(populateProgramModel)
@@ -106,7 +107,7 @@ Item {
             ViewPlaceholder {
                 enabled: listview.count === 0
                 text: qsTr("No programs")
-                hintText: qsTr("Pull down to select country and channels")
+                hintText: qsTr("Pull down to update or to select another channel")
             }
         }
     }

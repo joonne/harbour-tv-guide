@@ -11,9 +11,11 @@ Page {
     id: tvguidepage
 
     function populateChannelModel(channels) {
+        channelView.model = 0
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
+        channelView.model = channelModel
     }
 
     SilicaFlickable {
