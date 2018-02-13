@@ -1,4 +1,4 @@
-/* taylorhakes/promise-polyfill */
+/* https://github.com/taylorhakes/promise-polyfill */
 
 .import "timeout.js" as Timeout;
 

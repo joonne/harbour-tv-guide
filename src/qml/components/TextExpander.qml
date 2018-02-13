@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 Column {
     id: textExpander
 
+    property string textLabel: ''
     property string textContent: ''
 
     Item {
@@ -26,7 +27,7 @@ Column {
 
             TextArea {
                 id: contentLabel
-                label: qsTr("Description")
+                label: textLabel
                 width: parent.width
                 text:  textContent
                 readOnly: true

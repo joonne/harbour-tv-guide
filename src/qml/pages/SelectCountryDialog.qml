@@ -13,6 +13,9 @@ Dialog {
                     countries.append(item)
                 })
             })
+            .catch(function() {
+                countries.clear()
+            })
     }
 
     ListModel { id: countries }
@@ -39,8 +42,11 @@ Dialog {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    country = countries.get(index)
-                    accept()
+                    country = {
+                        _id: countries.get(index)._id,
+                        name: countries.get(index).name,
+                        abbreviation: countries.get(index).abbreviation,
+                    }
                 }
             }
         }

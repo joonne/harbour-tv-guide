@@ -3,16 +3,27 @@ import Sailfish.Silica 1.0
 
 import "../js/tvApi.js" as TvApi
 
-Dialog {
+Page {
     property var country: ({})
     property var selectedChannels: ([])
+    property var appWindow
 
-    Component.onCompleted: {
+    Component.onCompleted: init()
+
+    Component.onDestruction: {
+        appWindow.changeChannels(selectedChannels)
+        appWindow.changeChannel(selectedChannels[0])
+    }
+
+    function init() {
         TvApi.getChannels(country.abbreviation)
             .then(function(result) {
                 result.forEach(function(item) {
                     channels.append(item)
                 })
+            })
+            .catch(function() {
+                channels.clear()
             })
     }
 
@@ -27,11 +38,22 @@ Dialog {
     SilicaListView {
         id: listView
         anchors.fill: parent
-        model: channels
         spacing: Theme.paddingLarge
         clip: true
 
-        header: DialogHeader { title: qsTr("Channels") }
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Update")
+                onClicked: init()
+            }
+        }
+
+        header: PageHeader {
+            id: header
+            title: qsTr("Channels")
+        }
+
+        model: channels
 
         delegate: Label {
             anchors {
@@ -46,19 +68,14 @@ Dialog {
                 anchors.fill: parent
                 onClicked: {
                     if (!isSelected(_id)) {
-                        selectedChannels.push({
-                                                  _id: channels.get(index)._id,
-                                                  name: channels.get(index).name,
-                                                  icon: channels.get(index).icon,
-                                                  country: channels.get(index).country
-                                              })
+                        selectedChannels.push(appWindow.qObjectToObject(channels.get(index)))
                     } else {
                         selectedChannels = selectedChannels.filter(function(channel) {
                             return channel._id !== _id
                         })
                     }
 
-                    console.log('selected: ', selectedChannels.length, 'channels')
+                    console.log(selectedChannels.length, 'channels selected')
                 }
             }
         }

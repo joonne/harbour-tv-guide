@@ -9,7 +9,7 @@ CoverBackground {
         spacing: Theme.paddingLarge
 
         Image {
-            source: appWindow.state.channel.icon
+            source: appWindow.selectedChannel.icon
             sourceSize.width: parent.width
             anchors {
                 left: parent.left
@@ -19,7 +19,7 @@ CoverBackground {
 
         Label {
             id: placeholder
-            text: appWindow.state.channel.name
+            text: appWindow.selectedChannel.name
             font.pixelSize: Theme.fontSizeTiny
             anchors {
                 left: parent.left

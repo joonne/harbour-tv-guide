@@ -49,6 +49,12 @@ Page {
             model: ObjectModel {
                 id: channelModel
             }
+
+            ViewPlaceholder {
+                enabled: !appWindow.state.channels.length
+                text: qsTr("No channels selected")
+                hintText: qsTr("Pull down to select channels")
+            }
         }
     }
 }

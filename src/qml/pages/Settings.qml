@@ -29,7 +29,10 @@ Page {
             }
 
             onClicked: {
-                var dialog = pageStack.push(Qt.resolvedUrl("SelectCountryDialog.qml"), { country: appWindow.state.country })
+                var dialog = pageStack.push(Qt.resolvedUrl("SelectCountryDialog.qml"), {
+                                                country: appWindow.state.country
+                                            })
+
                 dialog.accepted.connect(function() {
                     appWindow.changeCountry(Object.assign({}, dialog.country))
                     appWindow.changeChannels([])
@@ -51,13 +54,11 @@ Page {
                 leftMargin: (parent.width - width) / 2
             }
 
-            onClicked: {
-                var dialog = pageStack.push(Qt.resolvedUrl("SelectChannelsDialog.qml"), { country: appWindow.state.country, selectedChannels: appWindow.state.channels })
-                dialog.accepted.connect(function() {
-                    appWindow.changeChannels(dialog.selectedChannels.slice(0))
-                    appWindow.changeChannel(dialog.selectedChannels.slice(0)[0])
-                })
-            }
+            onClicked: pageStack.push(Qt.resolvedUrl("SelectChannelsPage.qml"), {
+                                          country: appWindow.state.country,
+                                          selectedChannels: appWindow.state.channels,
+                                          appWindow: appWindow
+                                      })
         }
     }
 }

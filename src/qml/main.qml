@@ -17,9 +17,11 @@ ApplicationWindow {
     Component.onCompleted: {
         DB.init()
         state = DB.readState()
+        selectedChannel = state.channels[0] || {}
     }
 
     property var state: ({})
+    property var selectedChannel: ({})
 
     onStateChanged: {
         if (!Object.keys(state).length) {
@@ -44,7 +46,7 @@ ApplicationWindow {
     }
 
     function changeChannel(channel) {
-        state = Object.assign({}, state, { channel: channel })
+        selectedChannel = Object.assign({}, channel)
     }
 
     function changeChannels(channels) {

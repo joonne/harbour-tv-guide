@@ -20,8 +20,8 @@ Item {
 
             listModel.append({
                                  name: program.data.name,
-                                 start: new Date(program.data.start * 1000).toLocaleString(Qt.locale(), 'hh:mm'),
-                                 end: new Date(program.data.end * 1000).toLocaleString(Qt.locale(), 'hh:mm'),
+                                 start: new Date(program.data.start * 1000),
+                                 end: new Date(program.data.end * 1000),
                                  description: program.data.description,
                                  currentProgram: false,
                              });
@@ -62,6 +62,7 @@ Item {
             clip: true
             delegate: ListItem {
                 width: parent.width
+                contentHeight: Theme.itemSizeExtraLarge
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("ProgramOverviewPage.qml"), {
                                        programName: name,
@@ -74,6 +75,7 @@ Item {
                 Column {
                     x: Theme.paddingLarge
                     width: parent.width - Theme.paddingLarge
+                    anchors.centerIn: parent
 
                     Label {
                         color: currentProgram ? Theme.highlightColor : Theme.primaryColor
@@ -85,8 +87,13 @@ Item {
                     Label {
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryColor
-                        text: start + " - " + end
+                        text: start.toLocaleString(Qt.locale(), 'hh:mm') + " - " + end.toLocaleString(Qt.locale(), 'hh:mm')
+                    }
 
+                    Label {
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.secondaryColor
+                        text: ((end.getTime() - start.getTime()) / 1000) / 60 + " " + qsTr("minutes")
                     }
                 }
             }

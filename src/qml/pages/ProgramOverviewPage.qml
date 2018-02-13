@@ -8,8 +8,8 @@ Page {
 
     property string programName
     property string programOverview
-    property string start
-    property string end
+    property var start
+    property var end
 
     SilicaFlickable {
         anchors.fill: parent
@@ -33,19 +33,29 @@ Page {
 
             TextField {
                 id: timeField
-                text: start + " - " + end
+                text: start.toLocaleString(Qt.locale(), 'hh:mm') + " - " + end.toLocaleString(Qt.locale(), 'hh:mm')
                 readOnly: true
                 color: Theme.secondaryColor
                 label: qsTr("Time")
                 font.pixelSize: Theme.fontSizeSmall
                 width: programoverviewpage.width
+            }
 
+            TextField {
+                id: durationField
+                text: ((end.getTime() - start.getTime()) / 1000) / 60 + " " + qsTr("minutes")
+                readOnly: true
+                color: Theme.secondaryColor
+                label: qsTr("Duration")
+                font.pixelSize: Theme.fontSizeSmall
+                width: programoverviewpage.width
             }
 
             TextExpander {
                 id: expander
                 width: programoverviewpage.width
                 textContent: programOverview
+                textLabel: qsTr("Description")
             }
         }
     }
