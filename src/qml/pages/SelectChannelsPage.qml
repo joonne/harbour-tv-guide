@@ -15,22 +15,49 @@ Page {
         appWindow.changeChannel(selectedChannels[0])
     }
 
+    function isSelected(id) {
+        return selectedChannels.some(function(channel) {
+            return channel._id === id
+        })
+    }
+
+    function populateChannels(result) {
+        result.forEach(function(item) {
+            var selected = false
+
+            if (isSelected(item._id)) {
+                selected = true
+            }
+
+            var channel = Object.assign({}, item, {
+                                            selected: selected
+                                        })
+
+            channels.append(channel)
+        })
+    }
+
     function init() {
         TvApi.getChannels(country.abbreviation)
-            .then(function(result) {
-                result.forEach(function(item) {
-                    channels.append(item)
-                })
-            })
+            .then(populateChannels)
             .catch(function() {
                 channels.clear()
             })
     }
 
-    function isSelected(id) {
-        return selectedChannels.some(function(channel) {
-            return channel._id === id
-        })
+    function selectAll() {
+        selectedChannels.length = 0
+        for (var i = 0; i < listView.count; ++i) {
+            selectedChannels.push(appWindow.qObjectToObject(channels.get(i)))
+            channels.get(i).selected = true
+        }
+    }
+
+    function unSelectAll() {
+        selectedChannels.length = 0;
+        for (var i = 0; i < listView.count; ++i) {
+            channels.get(i).selected = false
+        }
     }
 
     ListModel { id: channels }
@@ -42,6 +69,18 @@ Page {
         clip: true
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr("Select all")
+                onClicked: selectAll()
+                enabled: selectedChannels.length !== listView.count
+            }
+
+            MenuItem {
+                text: qsTr("Unselect all")
+                onClicked: unSelectAll()
+                enabled: selectedChannels.length === listView.count
+            }
+
             MenuItem {
                 text: qsTr("Update")
                 onClicked: init()
@@ -62,17 +101,19 @@ Page {
             }
             text: name
             font.pixelSize: Theme.fontSizeMedium
-            color: isSelected(_id) ? Theme.highlightColor : Theme.primaryColor
+            color: selected ? Theme.highlightColor : Theme.primaryColor
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
                     if (!isSelected(_id)) {
                         selectedChannels.push(appWindow.qObjectToObject(channels.get(index)))
+                        channels.get(index).selected = true
                     } else {
                         selectedChannels = selectedChannels.filter(function(channel) {
                             return channel._id !== _id
                         })
+                        channels.get(index).selected = false
                     }
 
                     console.log(selectedChannels.length, 'channels selected')

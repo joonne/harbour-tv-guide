@@ -63,15 +63,13 @@ Item {
             clip: true
             delegate: ListItem {
                 width: parent.width
-                contentHeight: Theme.itemSizeExtraLarge
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("ProgramOverviewPage.qml"), {
-                                       programName: name,
-                                       programOverview: description,
-                                       start: start,
-                                       end: end
-                                   })
-                }
+                contentHeight: Theme.itemSizeMedium
+                onClicked: pageStack.push(Qt.resolvedUrl("ProgramOverviewPage.qml"), {
+                                              programName: name,
+                                              programOverview: description,
+                                              start: start,
+                                              end: end
+                                          })
 
                 Column {
                     x: Theme.paddingLarge
@@ -88,13 +86,7 @@ Item {
                     Label {
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryColor
-                        text: start.toLocaleString(Qt.locale(), 'hh:mm') + " - " + end.toLocaleString(Qt.locale(), 'hh:mm')
-                    }
-
-                    Label {
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.secondaryColor
-                        text: ((end.getTime() - start.getTime()) / 1000) / 60 + " " + qsTr("minutes")
+                        text: start.toLocaleString(Qt.locale(), 'hh:mm') + " - " + end.toLocaleString(Qt.locale(), 'hh:mm') + " " + ((end.getTime() - start.getTime()) / 1000) / 60 + " " + qsTr("minutes")
                     }
                 }
             }
