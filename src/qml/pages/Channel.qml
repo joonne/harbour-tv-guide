@@ -5,6 +5,7 @@ import "../js/tvApi.js" as TvApi
 
 Item {
     property var channel: ({})
+    property bool loading: false
 
     height: channelView.height
     width: channelView.width
@@ -33,10 +34,12 @@ Item {
 
         listview.positionViewAtIndex(currentIndex, ListView.Beginning);
         listview.currentIndex = currentIndex;
+        loading = false
     }
 
     function initialize() {
         listModel.clear()
+        loading = true
         TvApi.getPrograms(channel._id)
             .then(populateProgramModel)
             .catch(populateProgramModel)
@@ -63,7 +66,7 @@ Item {
             clip: true
             delegate: ListItem {
                 width: parent.width
-                contentHeight: Theme.itemSizeMedium
+                contentHeight: Theme.itemSizeExtraSmall
                 onClicked: pageStack.push(Qt.resolvedUrl("ProgramOverviewPage.qml"), {
                                               programName: name,
                                               programOverview: description,
@@ -76,17 +79,23 @@ Item {
                     width: parent.width - Theme.paddingLarge
                     anchors.centerIn: parent
 
-                    Label {
-                        color: currentProgram ? Theme.highlightColor : Theme.primaryColor
-                        text: name
+                    Row {
                         width: parent.width
-                        truncationMode: TruncationMode.Fade
-                    }
 
-                    Label {
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.secondaryColor
-                        text: start.toLocaleString(Qt.locale(), 'hh:mm') + " - " + end.toLocaleString(Qt.locale(), 'hh:mm') + " " + ((end.getTime() - start.getTime()) / 1000) / 60 + " " + qsTr("minutes")
+                        Label {
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: currentProgram ? Theme.highlightColor : Theme.secondaryColor
+                            text: start.toLocaleString(Qt.locale(), 'hh:mm')
+                            width: 0.2 * parent.width
+                        }
+
+                        Label {
+                            color: currentProgram ? Theme.highlightColor : Theme.primaryColor
+                            text: name
+                            font.pixelSize: Theme.fontSizeSmall
+                            width: 0.8 * parent.width
+                            truncationMode: TruncationMode.Fade
+                        }
                     }
                 }
             }
@@ -97,9 +106,14 @@ Item {
             }
 
             ViewPlaceholder {
-                enabled: listview.count === 0
+                enabled: listview.count === 0 && !loading
                 text: qsTr("No programs")
                 hintText: qsTr("Pull down to update or to select another channel")
+            }
+
+            ViewPlaceholder {
+                enabled: loading
+                text: qsTr("loading...")
             }
         }
     }

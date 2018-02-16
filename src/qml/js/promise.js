@@ -174,6 +174,21 @@
     });
   };
 
+  // TODO: check if this works or can even work
+  Promise.finally = function (callback) {
+    var constructor = this.constructor;
+
+    return this.then(function (value) {
+      return constructor.resolve(callback()).then(function () {
+        return value;
+      });
+    }, function (reason) {
+      return constructor.resolve(callback()).then(function () {
+        throw reason;
+      });
+    });
+  };
+
   Promise.resolve = function (value) {
     if (value && typeof value === 'object' && value.constructor === Promise) {
       return value;
