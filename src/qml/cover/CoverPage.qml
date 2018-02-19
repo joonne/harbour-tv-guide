@@ -7,6 +7,7 @@ CoverBackground {
     Column {
         anchors.centerIn: parent
         spacing: Theme.paddingLarge
+        width: parent.width
 
         Image {
             source: appWindow.selectedChannel.icon
@@ -18,13 +19,22 @@ CoverBackground {
         }
 
         Label {
-            id: placeholder
             text: appWindow.selectedChannel.name
             font.pixelSize: Theme.fontSizeTiny
             anchors {
                 left: parent.left
                 leftMargin: (parent.width - width) / 2
             }
+        }
+
+        Label {
+            text: appWindow.currentProgram.name
+            font.pixelSize: Theme.fontSizeTiny
+            anchors {
+                left: parent.left
+                leftMargin: (parent.width - width) / 2
+            }
+            truncationMode: TruncationMode.Fade
         }
     }
 }

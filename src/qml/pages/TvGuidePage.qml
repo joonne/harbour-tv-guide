@@ -10,6 +10,9 @@ import "../js/channelFactory.js" as ChannelFactory
 Page {
     id: tvguidepage
 
+    signal changeChannel(var channel)
+    signal changeCurrentProgram(var program)
+
     function populateChannelModel(channels) {
         channelView.model = 0
         channels.forEach(function(channel) {
@@ -45,7 +48,8 @@ Page {
             clip: true
 
             onFlickEnded: {
-                appWindow.changeChannel(appWindow.qObjectToObject(channelView.currentItem.channel))
+                tvguidepage.changeChannel(channelView.currentItem.channel)
+                tvguidepage.changeCurrentProgram(channelView.currentItem.currentProgram)
             }
 
             model: ObjectModel {

@@ -22,6 +22,7 @@ ApplicationWindow {
 
     property var state: ({})
     property var selectedChannel: ({})
+    property var currentProgram : ({})
 
     onStateChanged: {
         if (!Object.keys(state).length) {
@@ -45,14 +46,24 @@ ApplicationWindow {
         state = Object.assign({}, state, { country: country })
     }
 
-    function changeChannel(channel) {
-        selectedChannel = Object.assign({}, channel)
-    }
-
     function changeChannels(channels) {
         state = Object.assign({}, state, { channels: channels })
     }
 
-    initialPage: TvGuidePage { id: guide }
+    function changeChannel(channel) {
+        selectedChannel = Object.assign({}, channel)
+    }
+
+    function changeCurrentProgram(program) {
+        currentProgram = Object.assign({}, qObjectToObject(program))
+    }
+
+    initialPage: TvGuidePage {
+        id: guide
+
+        onChangeChannel: appWindow.changeChannel(channel)
+        onChangeCurrentProgram: appWindow.changeCurrentProgram(program)
+    }
+
     cover: CoverPage { }
 }

@@ -6,6 +6,7 @@ import "../js/tvApi.js" as TvApi
 Item {
     property var channel: ({})
     property bool loading: false
+    property var currentProgram: ({})
 
     height: channelView.height
     width: channelView.width
@@ -15,14 +16,17 @@ Item {
         var currentIndex = 0;
 
         programs.forEach(function(program, index) {
-            if (dateNow >= new Date(program.data.start * 1000) && dateNow <= new Date(program.data.end * 1000)) {
+            var start = new Date(program.data.start * 1000);
+            var end = new Date(program.data.end * 1000);
+
+            if (dateNow >= start && dateNow <= end) {
                 currentIndex = index;
             }
 
             listModel.append({
                                  name: program.data.name,
-                                 start: new Date(program.data.start * 1000),
-                                 end: new Date(program.data.end * 1000),
+                                 start: start,
+                                 end: end,
                                  description: program.data.description,
                                  currentProgram: false,
                              });
@@ -30,6 +34,7 @@ Item {
 
         if (currentIndex) {
             listModel.get(currentIndex).currentProgram = true;
+            currentProgram = listModel.get(currentIndex)
         }
 
         listview.positionViewAtIndex(currentIndex, ListView.Beginning);
