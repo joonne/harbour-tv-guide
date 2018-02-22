@@ -15,9 +15,17 @@ Page {
 
     function populateChannelModel(channels) {
         channelView.model = 0
+
+        while (channelModel.get(0)) {
+            var channel = channelModel.get(0)
+            channel.destroy()
+            channelModel.remove(0)
+        }
+
         channels.forEach(function(channel) {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
+
         channelView.model = channelModel
     }
 
@@ -34,7 +42,7 @@ Page {
 
             MenuItem {
                 text: qsTr("Update")
-                onClicked: channelView.currentItem.initialize()
+                onClicked: channelView.currentItem && channelView.currentItem.initialize()
             }
         }
 

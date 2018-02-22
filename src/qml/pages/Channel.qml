@@ -52,6 +52,8 @@ Item {
 
     Component.onCompleted: initialize()
 
+    Component.onDestruction: listModel.clear()
+
     ListModel {  id: listModel }
 
     SilicaFlickable {

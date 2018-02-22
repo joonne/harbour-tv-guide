@@ -48,7 +48,7 @@ Page {
     function selectAll() {
         selectedChannels.length = 0
         for (var i = 0; i < listView.count; ++i) {
-            selectedChannels.push(appWindow.qObjectToObject(channels.get(i)))
+            selectedChannels.push(appWindow.qObjectToObject('channel', channels.get(i)))
             channels.get(i).selected = true
         }
     }
@@ -107,7 +107,7 @@ Page {
                 anchors.fill: parent
                 onClicked: {
                     if (!isSelected(_id)) {
-                        selectedChannels.push(appWindow.qObjectToObject(channels.get(index)))
+                        selectedChannels.push(appWindow.qObjectToObject('channel', channels.get(index)))
                         channels.get(index).selected = true
                     } else {
                         selectedChannels = selectedChannels.filter(function(channel) {

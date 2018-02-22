@@ -33,12 +33,25 @@ ApplicationWindow {
         guide.populateChannelModel(state.channels)
     }
 
-    function qObjectToObject(qObject) {
-        return {
-            _id: qObject._id,
-            name: qObject.name,
-            icon: qObject.icon,
-            country: qObject.country,
+    function qObjectToObject(type, qObject) {
+        switch (type) {
+            case 'channel':
+                return {
+                    _id: qObject._id,
+                    name: qObject.name,
+                    icon: qObject.icon,
+                    country: qObject.country,
+                }
+            case 'program':
+                return {
+                    _id: qObject._id,
+                    name: qObject.name,
+                    description: qObject.description,
+                    start: qObject.start,
+                    end: qObject.end,
+                }
+            default:
+                return {}
         }
     }
 
@@ -55,15 +68,16 @@ ApplicationWindow {
     }
 
     function changeCurrentProgram(program) {
-        currentProgram = Object.assign({}, qObjectToObject(program))
+        currentProgram = Object.assign({}, qObjectToObject('program', program))
     }
 
-    initialPage: TvGuidePage {
+    TvGuidePage {
         id: guide
 
         onChangeChannel: appWindow.changeChannel(channel)
         onChangeCurrentProgram: appWindow.changeCurrentProgram(program)
     }
 
+    initialPage: guide
     cover: CoverPage { }
 }
