@@ -4,53 +4,47 @@ import Sailfish.Silica 1.0
 import "../js/tvApi.js" as TvApi
 
 Item {
+
     property var channel: ({})
     property bool loading: false
     property var currentProgram: ({})
+    property bool initialized: false
 
     height: channelView.height
     width: channelView.width
 
-    function populateProgramModel(programs) {
-        var dateNow = new Date();
-        var currentIndex = 0;
+    WorkerScript {
+        id: worker
+        source: "../js/programLoader.js"
 
-        programs.forEach(function(program, index) {
-            var start = new Date(program.data.start * 1000);
-            var end = new Date(program.data.end * 1000);
+        onMessage: postPopulate(messageObject)
+    }
 
-            if (dateNow >= start && dateNow <= end) {
-                currentIndex = index;
-            }
-
-            listModel.append({
-                                 name: program.data.name,
-                                 start: start,
-                                 end: end,
-                                 description: program.data.description,
-                                 currentProgram: false,
-                             });
-        });
+    function postPopulate(messageObject) {
+        var currentIndex = messageObject.currentIndex;
 
         if (currentIndex) {
             listModel.get(currentIndex).currentProgram = true;
             currentProgram = listModel.get(currentIndex)
         }
 
-        listview.positionViewAtIndex(currentIndex, ListView.Beginning);
-        listview.currentIndex = currentIndex;
+        listView.positionViewAtIndex(currentIndex, ListView.Center)
+        listView.currentIndex = currentIndex
+
+        initialized = true
         loading = false
     }
 
-    function initialize() {
-        listModel.clear()
-        loading = true
-        TvApi.getPrograms(channel._id)
-            .then(populateProgramModel)
-            .catch(populateProgramModel)
+    function populate(programs) {
+        worker.sendMessage({ programs: programs, model: listModel })
     }
 
-    Component.onCompleted: initialize()
+    function initialize() {
+        loading = true
+        TvApi.getPrograms(channel._id)
+            .then(populate)
+            .catch(populate)
+    }
 
     Component.onDestruction: listModel.clear()
 
@@ -65,7 +59,7 @@ Item {
         }
 
         SilicaListView {
-            id: listview
+            id: listView
             width: parent.width
             height: parent.height - pageheader.height
             anchors.top: pageheader.bottom
@@ -109,11 +103,11 @@ Item {
 
             VerticalScrollDecorator {
                 id: decorator
-                flickable: listview
+                flickable: listView
             }
 
             ViewPlaceholder {
-                enabled: listview.count === 0 && !loading
+                enabled: listView.count === 0 && !loading
                 text: qsTr("No programs")
                 hintText: qsTr("Pull down to update or to select another channel")
             }

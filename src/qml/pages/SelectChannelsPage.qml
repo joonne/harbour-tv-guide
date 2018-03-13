@@ -8,6 +8,9 @@ Page {
     property var selectedChannels: ([])
     property var appWindow
 
+    signal changeChannels(var selectedChannels)
+    signal changeChannel(var channel)
+
     Component.onCompleted: init()
 
     Component.onDestruction: {
@@ -46,7 +49,7 @@ Page {
     }
 
     function selectAll() {
-        selectedChannels.length = 0
+        selectedChannels = []
         for (var i = 0; i < listView.count; ++i) {
             selectedChannels.push(appWindow.qObjectToObject('channel', channels.get(i)))
             channels.get(i).selected = true
@@ -54,7 +57,7 @@ Page {
     }
 
     function unSelectAll() {
-        selectedChannels.length = 0;
+        selectedChannels = []
         for (var i = 0; i < listView.count; ++i) {
             channels.get(i).selected = false
         }

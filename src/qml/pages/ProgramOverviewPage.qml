@@ -35,7 +35,6 @@ Page {
                 id: timeField
                 text: start.toLocaleString(Qt.locale(), 'hh:mm') + " - " + end.toLocaleString(Qt.locale(), 'hh:mm')
                 readOnly: true
-                color: Theme.secondaryColor
                 label: qsTr("Time")
                 font.pixelSize: Theme.fontSizeSmall
                 width: programoverviewpage.width
@@ -45,7 +44,6 @@ Page {
                 id: durationField
                 text: ((end.getTime() - start.getTime()) / 1000) / 60 + " " + qsTr("minutes")
                 readOnly: true
-                color: Theme.secondaryColor
                 label: qsTr("Duration")
                 font.pixelSize: Theme.fontSizeSmall
                 width: programoverviewpage.width

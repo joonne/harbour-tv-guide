@@ -31,7 +31,6 @@ Column {
                 width: parent.width
                 text:  textContent
                 readOnly: true
-                color: Theme.secondaryColor
                 onClicked: textContainer.expanded = !textContainer.expanded
             }
         }
@@ -47,7 +46,7 @@ Column {
         id: expanderToggle
         height: Theme.paddingLarge
         width: parent.width
-        visible: textContainer.actualSize > textContainer.collapsedSize && textContainer.expanded === false
+        visible: textContainer.actualSize >= textContainer.collapsedSize && textContainer.expanded === false
 
         MoreIndicator {
             id: moreIndicator

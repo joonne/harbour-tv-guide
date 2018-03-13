@@ -14,8 +14,6 @@ Page {
     signal changeCurrentProgram(var program)
 
     function populateChannelModel(channels) {
-        channelView.model = 0
-
         while (channelModel.get(0)) {
             var channel = channelModel.get(0)
             channel.destroy()
@@ -26,7 +24,34 @@ Page {
             channelModel.append(ChannelFactory.createChannel(channel))
         })
 
-        channelView.model = channelModel
+        handleInitialization()
+    }
+
+    function initializeChannel(index) {
+        if (channelModel.get(index) && !channelModel.get(index).initialized) {
+            channelModel.get(index).initialize()
+        }
+    }
+
+    function handleInitialization() {
+
+        if (channelView.currentIndex > 2) {
+
+            initializeChannel(channelView.currentIndex - 3)
+            initializeChannel(channelView.currentIndex - 2)
+            initializeChannel(channelView.currentIndex - 1)
+
+        } else {
+
+            initializeChannel(channelModel.count - 3)
+            initializeChannel(channelModel.count - 2)
+            initializeChannel(channelModel.count - 1)
+        }
+
+        initializeChannel(channelView.currentIndex)
+        initializeChannel(channelView.currentIndex + 1)
+        initializeChannel(channelView.currentIndex + 2)
+        initializeChannel(channelView.currentIndex + 3)
     }
 
     SilicaFlickable {
@@ -42,7 +67,8 @@ Page {
 
             MenuItem {
                 text: qsTr("Update")
-                onClicked: channelView.currentItem && channelView.currentItem.initialize()
+                onClicked: channelView.currentItem.initialize()
+                enabled: channelView.currentItem !== null
             }
         }
 
@@ -58,6 +84,7 @@ Page {
             onFlickEnded: {
                 tvguidepage.changeChannel(channelView.currentItem.channel)
                 tvguidepage.changeCurrentProgram(channelView.currentItem.currentProgram)
+                handleInitialization()
             }
 
             model: ObjectModel {

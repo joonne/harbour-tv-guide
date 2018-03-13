@@ -6,13 +6,15 @@ import "../js/tvApi.js" as TvApi
 Dialog {
     property var country: ({})
 
+    function populateCountriesModel(result) {
+        result.forEach(function(item) {
+            countries.append(item)
+        })
+    }
+
     Component.onCompleted: {
         TvApi.getCountries()
-            .then(function(result) {
-                result.forEach(function(item) {
-                    countries.append(item)
-                })
-            })
+            .then(populateCountriesModel)
             .catch(function() {
                 countries.clear()
             })
