@@ -6,7 +6,8 @@ TARGET = harbour-tv-guide
 # In the bright future this config line will do a lot of stuff to you
 CONFIG += sailfishapp
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    serializer.cpp
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 DEFINES += APP_BUILDNUM=\\\"$$RELEASE\\\"
@@ -36,3 +37,6 @@ DISTFILES += \
     qml/js/channelFactory.js \
     qml/js/tvApi.js \
     qml/pages/Settings.qml
+
+HEADERS += \
+    serializer.h

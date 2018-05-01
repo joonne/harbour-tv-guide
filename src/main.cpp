@@ -7,7 +7,10 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QGuiApplication>
+#include <QThread>
+#include <QObject>
 
+#include "./serializer.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +18,15 @@ int main(int argc, char *argv[])
     // but very soon it won't be enough for you anyway, so use this more detailed example from start
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
+
+    auto worker = new QThread;
+
+    QScopedPointer<Serializer> serializer(new Serializer);
+    view->rootContext()->setContextProperty("serializer", serializer.data());
+    serializer->moveToThread(worker);
+
+    QObject::connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
+    worker->start();
 
     // That is how you can access version strings in C++. And pass them on to QML
     view->rootContext()->setContextProperty("appVersion", APP_VERSION);

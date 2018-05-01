@@ -44,7 +44,7 @@ Page {
                                                 })
 
                     dialog.accepted.connect(function() {
-                        appWindow.changeCountry(Object.assign({}, dialog.country))
+                        appWindow.changeCountry(dialog.country)
                         appWindow.changeChannels([])
                     })
                 }
@@ -67,7 +67,9 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("SelectChannelsPage.qml"), {
                                               country: appWindow.state.country,
                                               selectedChannels: appWindow.state.channels,
-                                              appWindow: appWindow
+                                              changeChannels: appWindow.changeChannels,
+                                              changeChannel: appWindow.changeChannel,
+                                              qObjectToObject: appWindow.qObjectToObject,
                                           })
             }
         }

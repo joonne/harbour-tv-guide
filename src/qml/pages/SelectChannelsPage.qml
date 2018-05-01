@@ -6,16 +6,16 @@ import "../js/tvApi.js" as TvApi
 Page {
     property var country: ({})
     property var selectedChannels: ([])
-    property var appWindow
 
-    signal changeChannels(var selectedChannels)
-    signal changeChannel(var channel)
+    property var changeChannels
+    property var changeChannel
+    property var qObjectToObject
 
     Component.onCompleted: init()
 
     Component.onDestruction: {
-        appWindow.changeChannels(selectedChannels)
-        appWindow.changeChannel(selectedChannels[0])
+        changeChannels(selectedChannels)
+        changeChannel(selectedChannels[0])
     }
 
     function isSelected(id) {
@@ -51,7 +51,7 @@ Page {
     function selectAll() {
         selectedChannels = []
         for (var i = 0; i < listView.count; ++i) {
-            selectedChannels.push(appWindow.qObjectToObject('channel', channels.get(i)))
+            selectedChannels.push(qObjectToObject('channel', channels.get(i)))
             channels.get(i).selected = true
         }
     }
@@ -110,7 +110,7 @@ Page {
                 anchors.fill: parent
                 onClicked: {
                     if (!isSelected(_id)) {
-                        selectedChannels.push(appWindow.qObjectToObject('channel', channels.get(index)))
+                        selectedChannels.push(qObjectToObject('channel', channels.get(index)))
                         channels.get(index).selected = true
                     } else {
                         selectedChannels = selectedChannels.filter(function(channel) {

@@ -46,6 +46,7 @@ Item {
             .catch(populate)
     }
 
+    Component.onCompleted: initialize()
     Component.onDestruction: listModel.clear()
 
     ListModel {  id: listModel }
@@ -65,6 +66,7 @@ Item {
             anchors.top: pageheader.bottom
             model: listModel
             clip: true
+
             delegate: ListItem {
                 width: parent.width
                 contentHeight: Theme.itemSizeExtraSmall

@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+
 import "pages"
 import "cover"
-
-import "./js/storage.js" as DB
 
 // Object.assign
 import "./js/polyfills.js" as Polyfills
@@ -15,8 +14,7 @@ ApplicationWindow {
     readonly property string _APP_BUILD_NUMBER: appBuildNum
 
     Component.onCompleted: {
-        DB.init()
-        state = DB.readState()
+        state = serializer.getState()
         selectedChannel = state.channels[0] || {}
     }
 
@@ -29,7 +27,9 @@ ApplicationWindow {
             return
         }
 
-        DB.writeState(state)
+        console.log('setState start')
+        serializer.setState(state)
+        console.log('setState end')
         guide.populateChannelModel(state.channels)
     }
 

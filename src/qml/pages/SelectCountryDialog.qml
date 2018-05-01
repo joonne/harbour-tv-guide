@@ -12,13 +12,15 @@ Dialog {
         })
     }
 
-    Component.onCompleted: {
+    function init() {
         TvApi.getCountries()
             .then(populateCountriesModel)
             .catch(function() {
                 countries.clear()
             })
     }
+
+    Component.onCompleted: init()
 
     ListModel { id: countries }
 
