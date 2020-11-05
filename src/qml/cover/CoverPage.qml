@@ -28,7 +28,7 @@ CoverBackground {
         }
 
         Label {
-            text: appWindow.currentProgram.name
+            text: appWindow.currentProgram.name || '-'
             font.pixelSize: Theme.fontSizeTiny
             anchors {
                 left: parent.left

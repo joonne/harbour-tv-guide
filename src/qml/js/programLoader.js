@@ -24,5 +24,5 @@ WorkerScript.onMessage = function(msg) {
     });
 
     msg.model.sync();
-    WorkerScript.sendMessage({ currentIndex: currentIndex })
+    WorkerScript.sendMessage({ currentIndex: currentIndex });
 }

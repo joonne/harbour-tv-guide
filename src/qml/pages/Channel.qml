@@ -21,10 +21,10 @@ Item {
     }
 
     function postPopulate(messageObject) {
-        var currentIndex = messageObject.currentIndex;
+        var currentIndex = messageObject.currentIndex
 
         if (currentIndex) {
-            listModel.get(currentIndex).currentProgram = true;
+            listModel.get(currentIndex).currentProgram = true
             currentProgram = listModel.get(currentIndex)
         }
 

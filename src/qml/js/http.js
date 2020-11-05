@@ -1,4 +1,4 @@
-.import "promise.js" as Promise;
+.import "promise.js" as Promise
 
 function get(url) {
     return new Promise(function(resolve, reject) {

@@ -15,7 +15,8 @@ Dialog {
     Component.onCompleted: {
         TvApi.getCountries()
             .then(populateCountriesModel)
-            .catch(function() {
+            .catch(function(error) {
+                console.log(JSON.stringify(error, null, 2))
                 countries.clear()
             })
     }
